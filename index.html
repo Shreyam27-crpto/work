@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A responsive hotel discovery app powered by the Demo Hotels API."
+    />
+    <title>Staywise Hotels</title>
+    <link rel="preconnect" href="https://demohotelsapi.pythonanywhere.com" />
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="stylesheet" href="./src/styles.css" />
+    <script type="module" src="./src/app.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Staywise home">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span>
+          <strong>Staywise</strong>
+          <small>Live hotel discovery</small>
+        </span>
+      </a>
+
+      <nav class="topbar-actions" aria-label="Primary">
+        <a href="#hotels">Hotels</a>
+        <a href="#filters">Filters</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Powered by the provided hotels API</p>
+          <h1 id="page-title">Find stays that fit the way you travel.</h1>
+          <p>
+            Search Indian city hotels, compare ratings and prices, and open a
+            full photo view before you decide.
+          </p>
+        </div>
+        <form class="search-panel" id="search-form" role="search">
+          <label for="search-input">Search hotel or city</label>
+          <div class="search-row">
+            <input
+              id="search-input"
+              name="search"
+              type="search"
+              placeholder="Try Goa, Mumbai, Regal..."
+              autocomplete="off"
+            />
+            <button class="primary-button" type="submit">Search</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="content-shell" id="hotels">
+        <aside class="filters" id="filters" aria-labelledby="filters-title">
+          <div class="section-heading">
+            <p class="eyebrow">Refine</p>
+            <h2 id="filters-title">Filters</h2>
+          </div>
+
+          <div class="filter-group">
+            <label for="location-select">Location</label>
+            <select id="location-select">
+              <option value="">All cities</option>
+            </select>
+            <div class="chip-list" id="city-chips" aria-label="Popular cities"></div>
+          </div>
+
+          <div class="filter-group">
+            <span class="filter-label">Price per night</span>
+            <div class="range-grid">
+              <label>
+                Min
+                <input id="min-price" type="number" min="0" step="500" placeholder="1000" />
+              </label>
+              <label>
+                Max
+                <input id="max-price" type="number" min="0" step="500" placeholder="10000" />
+              </label>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <span class="filter-label">Rating</span>
+            <div class="range-grid">
+              <label>
+                Min
+                <input id="min-rating" type="number" min="0" max="5" step="0.1" placeholder="2.5" />
+              </label>
+              <label>
+                Max
+                <input id="max-rating" type="number" min="0" max="5" step="0.1" placeholder="5.0" />
+              </label>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label for="sort-select">Sort by</label>
+            <select id="sort-select">
+              <option value="-rating">Highest rating</option>
+              <option value="price">Lowest price</option>
+              <option value="-price">Highest price</option>
+              <option value="name">Name A-Z</option>
+            </select>
+          </div>
+
+          <button class="secondary-button" id="clear-filters" type="button">Clear filters</button>
+        </aside>
+
+        <section class="results" aria-labelledby="results-title">
+          <div class="results-header">
+            <div>
+              <p class="eyebrow" id="results-meta">Fetching hotels</p>
+              <h2 id="results-title">Available stays</h2>
+            </div>
+            <div class="view-tools">
+              <button class="icon-button is-active" type="button" data-view="grid" aria-label="Grid view">
+                <span aria-hidden="true">▦</span>
+              </button>
+              <button class="icon-button" type="button" data-view="list" aria-label="List view">
+                <span aria-hidden="true">☰</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="status" id="status" role="status" aria-live="polite"></div>
+          <div class="hotel-grid" id="hotel-list"></div>
+          <button class="load-more" id="load-more" type="button" hidden>Load more hotels</button>
+        </section>
+      </section>
+    </main>
+
+    <dialog class="hotel-dialog" id="hotel-dialog" aria-labelledby="dialog-title">
+      <button class="dialog-close" id="dialog-close" type="button" aria-label="Close details">×</button>
+      <div id="dialog-content"></div>
+    </dialog>
+  </body>
+</html>
